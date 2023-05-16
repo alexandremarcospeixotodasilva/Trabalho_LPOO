@@ -5,31 +5,36 @@ import java.text.DecimalFormat;
 
 public class CarrinhoDeCompra {
 	private ArrayList<Produto> produtos = new ArrayList<Produto>();
-	public String IDremovido;
 	public double impostoTotal;
 	public double valorTotal;
-	public double x;
-	
 	
 	public void insere(Produto p) {
-		for (int i = 0; i < produtos.size(); i++) {
-			Produto p1 = produtos.get(i);
-			if(p1.getID() == p.getID()) {
+		for (Produto p1 : produtos) {
+			if (p1.getId() == p.getId()) {
 				produtos.remove(p1);
+				break;
 			}
 		}
 		produtos.add(p);
 	}
 	
 	public void remocao(Produto p) {
-		IDremovido = p.getID();
+		if (produtos.contains(p)) {
+			for (Produto p1 : produtos) {
+				if (p1.getId().equals(p.getId())) {
+					produtos.remove(p1);
+					break;
+				}
+			}
+		} else {
+			throw new IllegalArgumentException("Produto com o ID: " + p.getId() + " inexistente no carrinho");
+		}
 		if(!produtos.contains(p)) {
-			throw new IllegalArgumentException("Produto com o ID: "+IDremovido+" inexistente");
 		}
 		else {
 			for (int i = 0; i < produtos.size(); i++) {
 				Produto p1 = produtos.get(i);
-				if(p1.getID().equals(p.getID())) {
+				if(p1.getId().equals(p.getId())) {
 					produtos.remove(p1);
 				}
 			}
@@ -44,13 +49,11 @@ public class CarrinhoDeCompra {
     	Collections.sort(produtos);
         for(Produto p: produtos) {
         	p.exibe();
-        }
-		for (int i = 0; i < produtos.size(); i++) {
-			Produto p = produtos.get(i);
 			impostoTotal += p.imposto;
-			valorTotal += p.PrecoFinal;
-		}
-		x = impostoTotal/valorTotal * 100;
+			valorTotal += p.getPrecoFinal();
+        }
+
+		double x = impostoTotal/valorTotal * 100;
 		String xformatado = new DecimalFormat("#0.00").format(x);
     	System.out.println("---------------------------------------");
     	System.out.println("Imposto Total: "+impostoTotal+"("+xformatado+"%)");
@@ -59,20 +62,23 @@ public class CarrinhoDeCompra {
        	valorTotal = 0;
        	impostoTotal = 0;
 	}
+
 	public List<Produto> RelatorioPorPreco() {
     	System.out.println("---------------------------------------");
     	System.out.println("ID | Nome | Descricao | Preco | Imposto");
     	System.out.println("---------------------------------------");
-		Collections.sort(produtos, new precoComparator());
+		Collections.sort(produtos, (Produto p1, Produto p2) -> {
+				if(p1.getPrecoFinal() < p2.getPrecoFinal()) return 1;
+				if(p1.getPrecoFinal() > p2.getPrecoFinal()) return -1;
+				return 0;
+			});
         for(Produto p: produtos) {
         	p.exibe();
-        }
-		for (int i = 0; i < produtos.size(); i++) {
-			Produto p = produtos.get(i);
 			impostoTotal += p.imposto;
-			valorTotal += p.PrecoFinal;
-		}
-		x = impostoTotal/valorTotal * 100;
+			valorTotal += p.getPrecoFinal();
+        }
+		
+		double x = impostoTotal/valorTotal * 100;
 		String xformatado = new DecimalFormat("#0.00").format(x);
     	System.out.println("---------------------------------------");
     	System.out.println("Imposto Total: "+impostoTotal+"("+xformatado+"%)");

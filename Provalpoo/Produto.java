@@ -1,45 +1,40 @@
 public abstract class Produto implements Comparable<Produto>{
-	
-	
-	private String ID;
+	private String id;
 	private String nome;
 	protected String descricao;
-	protected double PrecoDeCusto;
-	protected double PrecoFinal;
+	protected double precoDeCusto;
+	protected double precoFinal;
 	protected double imposto;
 	
-	public Produto(String ID, String nome) {
-		this.ID = ID;
+	public Produto(String id, String nome, double precoDeCusto) {
+		this.id = id;
 		this.nome = nome;
-	}
-	public abstract void preco();
-		
-	public abstract void Imposto();
-	
-	public abstract void Descricao();
-	
-	public void setPrecoDeCusto(double precoDeCusto) {
-		PrecoDeCusto = precoDeCusto;
+		this.precoDeCusto = precoDeCusto;
 	}
 
-	public String getID() {
-		return ID;
+	protected abstract void calcularValorDeVenda();
+		
+	protected abstract void calcularTaxas();
+	
+	protected abstract void atualizarDescricao();
+
+	public String getId() {
+		return id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
 	
 	public double getPrecoFinal() {
-		return PrecoFinal;
+		return precoFinal;
 	}
+	
 	public int compareTo(Produto p) { 
     	return this.nome.compareTo(p.getNome());
     }
 
 	public void exibe() {
-		System.out.println(getID()+"| "+getNome()+"|"+descricao+"|" +PrecoFinal+"| "+imposto);
+		System.out.println(id + "| " + nome + "|" + descricao + "|" + precoFinal + "| " + imposto);
 	}
-
-
-
 }

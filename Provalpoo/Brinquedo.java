@@ -1,25 +1,23 @@
 public class Brinquedo extends Produto {
-	public Brinquedo(String ID, String nome) {
-		super(ID, nome);
+	public Brinquedo(String ID, String nome, double precoDeCusto) {
+		super(ID, nome, precoDeCusto);
+		atualizarDescricao();
+		calcularValorDeVenda();
+		calcularTaxas();
 	}
-	
-	public void preco() {
-		PrecoFinal = PrecoDeCusto /100 * 150;
-	}
-	public void Imposto() {
-		imposto = PrecoFinal / 100 * 25;
-		
-	}
-
 
 	@Override
-	public void Descricao() {
-		descricao = " ";
-		
+	protected void calcularValorDeVenda() {
+		precoFinal = precoDeCusto * 1.5;
 	}
 
+	@Override
+	protected void calcularTaxas() {
+		imposto = precoFinal * 0.25;
+	}
 
-
-
+	@Override
+	protected void atualizarDescricao() {
+		descricao = " ";
+	}
 }
-

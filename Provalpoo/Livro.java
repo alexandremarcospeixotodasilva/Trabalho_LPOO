@@ -1,34 +1,50 @@
-
 public class Livro extends Produto {
-	public int tipo;
-	public Livro(String ID, String nome, int tipo) {
-		super(ID, nome);
+	public TipoLivro tipo;
+	public Livro(String id, String nome, double precoDeCusto, TipoLivro tipo) {
+		super(id, nome, precoDeCusto);
 		this.tipo = tipo;
+		atualizarDescricao();
+		calcularValorDeVenda();
+		calcularTaxas();
 	}
 
 	@Override
-	public void preco() {
-		if(tipo == 1)
-			PrecoFinal = PrecoDeCusto / 100 * 120;
-		if(tipo == 2)
-			PrecoFinal = PrecoDeCusto / 100 * 130;
+	protected void calcularValorDeVenda() {
+		switch (tipo) {
+		    case EDUCACIONAL:
+				final double CENTO_E_VINTE_PORCENTO = 1.2;
+				precoFinal = precoDeCusto * CENTO_E_VINTE_PORCENTO;
+				break;
+			case NAO_EDUCACIONAL:
+				final double CENTO_E_TRINTA_PORCENTO = 1.3;
+				precoFinal = precoDeCusto * CENTO_E_TRINTA_PORCENTO;
+				break;
+		}
 	}
 
 	@Override
-	public void Imposto() {
-		if(tipo == 1)
-			imposto = PrecoFinal / 100 * 5;
-		if(tipo == 2)
-			imposto = PrecoFinal / 100 * 10;
-
+	protected void calcularTaxas() {
+		switch (tipo) {
+			case EDUCACIONAL:
+				final double CINCO_PORCENTO = 0.05;
+				imposto = precoFinal * CINCO_PORCENTO;
+				break;
+			case NAO_EDUCACIONAL:
+				final double DEZ_PORCENTO = 0.1;
+				imposto = precoFinal * DEZ_PORCENTO;
+				break;
+		}
 	}
 
 	@Override
-	public void Descricao() {
-		if(tipo == 1)
-			descricao = "Educacional";
-		if(tipo == 2)
-			descricao = "Nao Educacional";
+	public void atualizarDescricao() {
+		switch (tipo) {
+			case EDUCACIONAL:
+				descricao = "Educacional";
+				break;
+			case NAO_EDUCACIONAL:
+				descricao = "Nao Educacional";
+				break;
+		}
 	}
-
 }
