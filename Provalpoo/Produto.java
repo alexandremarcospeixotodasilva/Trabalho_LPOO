@@ -35,6 +35,6 @@ public abstract class Produto implements Comparable<Produto>{
     }
 
 	public void exibe() {
-		System.out.println(id + "| " + nome + "|" + descricao + "|" + precoFinal + "| " + imposto);
+		System.out.println(id + " | " + nome + " | " + descricao + " | " + precoFinal + " | " + imposto);
 	}
 }
