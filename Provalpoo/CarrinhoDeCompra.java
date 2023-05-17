@@ -55,7 +55,7 @@ public class CarrinhoDeCompra {
 		double porcentagemDeImpostoPago = impostoTotal / valorTotal * 100;
     	System.out.println("---------------------------------------");
     	System.out.println(String.format("Imposto Total: %.2f(%.2f%%)", impostoTotal, porcentagemDeImpostoPago));
-    	System.out.println(String.format("Valor Total: %d", valorTotal));
+    	System.out.println(String.format("Valor Total: %.2f", valorTotal));
        	System.out.println("---------------------------------------");
 	}
 
@@ -69,7 +69,7 @@ public class CarrinhoDeCompra {
 		double porcentagemDeImpostoPago = impostoTotal / valorTotal * 100;
     	System.out.println("---------------------------------------");
     	System.out.println(String.format("Imposto Total: %.2f(%.2f%%)", impostoTotal, porcentagemDeImpostoPago));
-    	System.out.println(String.format("Valor Total: %d", valorTotal));
+    	System.out.println(String.format("Valor Total: %.2f", valorTotal));
        	System.out.println("---------------------------------------");
 	}
 
