@@ -1,4 +1,4 @@
-public class gerenciador {
+public class Gerenciador {
 		public static void main(String[] args) {
 		CarrinhoDeCompra cc = new CarrinhoDeCompra();
 
