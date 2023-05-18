@@ -8,16 +8,18 @@ public class Brinquedo extends Produto {
 
 	@Override
 	protected void calcularValorDeVenda() {
-		precoFinal = precoDeCusto * 1.5;
+        final double CENTO_E_CINQUENTA_PORCENTO = 1.5;
+		precoFinal = precoDeCusto * CENTO_E_CINQUENTA_PORCENTO;
 	}
 
 	@Override
 	protected void calcularTaxas() {
-		imposto = precoFinal * 0.25;
+        final double VINTE_E_CINCO_PORCENTO = 0.25;
+		imposto = precoFinal * VINTE_E_CINCO_PORCENTO;
 	}
 
 	@Override
-	protected void atualizarDescricao() {
+	protected void atualizarDescricao() {;
 		descricao = " ";
 	}
 }

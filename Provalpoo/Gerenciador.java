@@ -1,4 +1,4 @@
-public class gerenciador {
+public class Gerenciador {
 		public static void main(String[] args) {
 		CarrinhoDeCompra cc = new CarrinhoDeCompra();
 
@@ -9,7 +9,7 @@ public class gerenciador {
 		Eletronico e3 = new Eletronico("e3", "Eletronico 3", 700, TipoEletronico.TRES);
 		
 		Livro l1 = new Livro("l1", "Livro 1", 100, TipoLivro.NAO_EDUCACIONAL);
-		Livro l2 = new Livro("l2", "Livro 2", 300, TipoLivro.EDUCACIONAL);
+		Livro l2 = new Livro("l2", "Aivro 2", 300, TipoLivro.EDUCACIONAL);
 		
 		// inclui produtos no carrinho
 		cc.insere(b);
@@ -20,17 +20,17 @@ public class gerenciador {
 		cc.insere(l1);
 
 		// exibe relat�rios
-		cc.RelatorionPorNome();
+		cc.relatorionPorNome();
 		System.out.println("\n");
-		cc.RelatorioPorPreco();
+		cc.relatorioPorPreco();
 		System.out.println("\n");
 		//remove um produto
 		cc.remocao(e1);
 		
 		// exibe relat�rios
-		cc.RelatorionPorNome();
+		cc.relatorionPorNome();
 		System.out.println("\n");
-		cc.RelatorioPorPreco();
+		cc.relatorioPorPreco();
 		System.out.println("\n");
 	}
 }

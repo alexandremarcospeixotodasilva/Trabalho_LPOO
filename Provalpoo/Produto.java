@@ -29,12 +29,16 @@ public abstract class Produto implements Comparable<Produto>{
 	public double getPrecoFinal() {
 		return precoFinal;
 	}
+
+    public double getImposto() {
+        return imposto;
+    }
 	
-	public int compareTo(Produto p) { 
-    	return this.nome.compareTo(p.getNome());
+	public int compareTo(Produto produto) { 
+    	return this.id.compareTo(produto.getId());
     }
 
 	public void exibe() {
-		System.out.println(id + "| " + nome + "|" + descricao + "|" + precoFinal + "| " + imposto);
+		System.out.println(id + " | " + nome + " | " + descricao + " | " + precoFinal + " | " + imposto);
 	}
 }

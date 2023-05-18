@@ -1,91 +1,89 @@
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
-import java.text.DecimalFormat;
 
 public class CarrinhoDeCompra {
-	private ArrayList<Produto> produtos = new ArrayList<Produto>();
+	private List<Produto> listaDeProdutos = new ArrayList<Produto>();
 	public double impostoTotal;
 	public double valorTotal;
 	
-	public void insere(Produto p) {
-		for (Produto p1 : produtos) {
-			if (p1.getId() == p.getId()) {
-				produtos.remove(p1);
+	public void insere(Produto produto) {
+		for (Produto produtoDoCarrinho : listaDeProdutos) {
+			if (produtoDoCarrinho.getId() == produto.getId()) {
+				listaDeProdutos.remove(produtoDoCarrinho);
 				break;
 			}
 		}
-		produtos.add(p);
+		listaDeProdutos.add(produto);
 	}
 	
-	public void remocao(Produto p) {
-		if (produtos.contains(p)) {
-			for (Produto p1 : produtos) {
-				if (p1.getId().equals(p.getId())) {
-					produtos.remove(p1);
+	public void remocao(Produto produto) {
+		if (listaDeProdutos.contains(produto)) {
+			for (Produto produtoDoCarrinho : listaDeProdutos) {
+				if (produtoDoCarrinho.getId().equals(produto.getId())) {
+					listaDeProdutos.remove(produtoDoCarrinho);
 					break;
 				}
 			}
 		} else {
-			throw new IllegalArgumentException("Produto com o ID: " + p.getId() + " inexistente no carrinho");
+			throw new IllegalArgumentException("Produto com o ID: " + produto.getId() + " inexistente no carrinho");
 		}
-		if(!produtos.contains(p)) {
-		}
-		else {
-			for (int i = 0; i < produtos.size(); i++) {
-				Produto p1 = produtos.get(i);
-				if(p1.getId().equals(p.getId())) {
-					produtos.remove(p1);
-				}
-			}
-		}
-		
 	}
 
-	public void RelatorionPorNome() {
+    public void calcularCarrinho() {
+        impostoTotal = 0;
+        valorTotal = 0;
+        for (Produto produto : listaDeProdutos) {
+            impostoTotal += produto.getImposto();
+            valorTotal += produto.getPrecoFinal();
+        }
+    }
+
+    public void exibirProdutos() {
+        for (Produto produto : listaDeProdutos) {
+            produto.exibe();
+        }
+    }
+
+	public void relatorionPorNome() {
+        ordenarPorNome();
+        calcularCarrinho();
     	System.out.println("---------------------------------------");
     	System.out.println("ID | Nome | Descricao | Preco | Imposto");
     	System.out.println("---------------------------------------");
-    	Collections.sort(produtos);
-        for(Produto p: produtos) {
-        	p.exibe();
-			impostoTotal += p.imposto;
-			valorTotal += p.getPrecoFinal();
-        }
-
-		double x = impostoTotal/valorTotal * 100;
-		String xformatado = new DecimalFormat("#0.00").format(x);
+        exibirProdutos();
+		double porcentagemDeImpostoPago = impostoTotal / valorTotal * 100;
     	System.out.println("---------------------------------------");
-    	System.out.println("Imposto Total: "+impostoTotal+"("+xformatado+"%)");
-    	System.out.println("Valor Total: "+valorTotal);
+    	System.out.println(String.format("Imposto Total: %.2f(%.2f%%)", impostoTotal, porcentagemDeImpostoPago));
+    	System.out.println(String.format("Valor Total: %.2f", valorTotal));
        	System.out.println("---------------------------------------");
-       	valorTotal = 0;
-       	impostoTotal = 0;
 	}
 
-	public List<Produto> RelatorioPorPreco() {
+	public void relatorioPorPreco() {
+		ordenarPorPreco();
+        calcularCarrinho();
     	System.out.println("---------------------------------------");
     	System.out.println("ID | Nome | Descricao | Preco | Imposto");
     	System.out.println("---------------------------------------");
-		Collections.sort(produtos, (Produto p1, Produto p2) -> {
-				if(p1.getPrecoFinal() < p2.getPrecoFinal()) return 1;
-				if(p1.getPrecoFinal() > p2.getPrecoFinal()) return -1;
-				return 0;
-			});
-        for(Produto p: produtos) {
-        	p.exibe();
-			impostoTotal += p.imposto;
-			valorTotal += p.getPrecoFinal();
-        }
-		
-		double x = impostoTotal/valorTotal * 100;
-		String xformatado = new DecimalFormat("#0.00").format(x);
+        exibirProdutos();
+		double porcentagemDeImpostoPago = impostoTotal / valorTotal * 100;
     	System.out.println("---------------------------------------");
-    	System.out.println("Imposto Total: "+impostoTotal+"("+xformatado+"%)");
-    	System.out.println("Valor Total: "+valorTotal);
+    	System.out.println(String.format("Imposto Total: %.2f(%.2f%%)", impostoTotal, porcentagemDeImpostoPago));
+    	System.out.println(String.format("Valor Total: %.2f", valorTotal));
        	System.out.println("---------------------------------------");
-       	valorTotal = 0;
-       	impostoTotal = 0;
-		return produtos;
 	}
+
+    public void ordenarPorNome() {
+    	Collections.sort(listaDeProdutos, (Produto p1, Produto p2) -> {
+            return p1.getNome().compareTo(p2.getNome());
+        });
+    }
+
+    public void ordenarPorPreco() {
+        Collections.sort(listaDeProdutos, (Produto p1, Produto p2) -> {
+            if(p1.getPrecoFinal() < p2.getPrecoFinal()) return 1;
+            if(p1.getPrecoFinal() > p2.getPrecoFinal()) return -1;
+            return 0;
+        });
+    }
 }
